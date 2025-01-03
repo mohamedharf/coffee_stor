@@ -1,0 +1,77 @@
+{%extends 'base.html'%}
+{%load static%}
+{% block title %} checkout {% endblock %}
+{% block content %}
+
+<div class="my-form container p-5 my-5 rounded border border-warning">
+    <h2 class="text-center">checkout</h2>
+    <hr>
+{% include 'partials/_alerts.html' %}
+
+{% if not request.user.is_authenticated or request.user.is_anonymous %}
+<h5>
+    you mustbe logn in
+</h5>
+{% else %}
+{% if is_added == True %}
+<form method="POST" style='display : none;'>
+
+{% else %}
+<form method="POST">
+
+{% endif %}
+
+{% csrf_token %}
+<h5 >
+Order Number: {{order.id}}
+<hr>
+with total: {{ total }}$
+<hr>
+for {{orderdetails.count}} products
+<hr>
+
+</h5>
+<a href="{% url 'cart' %}" class="btn btn-secondary btn-lg active  " > card</a> 
+<a href="{% url 'products' %}" class="btn btn-primary btn-lg active float-right m-1" >shopping</a>
+
+<hr>
+      
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputFirstName"> shipment address</label>
+                <input type="text" class="form-control" name='shipment_address' id="inputFirstName" required value="{{shipment_address}}">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputLastName">shipment phone </label>
+                <input type="text" class="form-control" name='ship_phone' id="inputLastName" required  value="{{lname}}">
+            </div>
+        </div>
+
+      
+       
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputCity">card number</label>
+                <input type="text" class="form-control" name='card_number' id="inputcard_number" required  value="{{card_number}}">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputZip">expire</label>
+                <input type="text" class="form-control" name='expire' id="inputexpire" required value="{{expire}}">
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputZip">code</label>
+                <input type="text" class="form-control" name='security_code' id="inputsecurity_code" placeholder="11111" required value="{{security_code}}">
+            </div>
+        </div>
+       
+        
+        <button type="submit"  name='btnpymint' class="btn btn-warning">pymint</button>
+    </form>
+
+
+{% endif %}
+  </div> 
+
+
+
+{%endblock%}

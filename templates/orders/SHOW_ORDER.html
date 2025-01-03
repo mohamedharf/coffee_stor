@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} |orders {% endblock %}
+{% block content %}
+<div class="my-form container p-5 my-5 rounded border border-warning">
+    <h2 class="text-center">orders</h2>
+    <hr>
+    {%    if request.user.is_authenticated and  request.user.is_anonymous%}
+    <h5 class='alert alert-danger'> 
+      you most be 
+       <a href="{% url 'signin' %}" class="text-dark">
+        LoOgEd IN
+    
+       </a>
+    </h5>
+    {% elif all_orders %}
+     {% if all_orders.count > 0 %}
+     <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Product</th>
+            <th scope="col">Image</th>
+            <th scope="col">Quantitu</th>
+            <th scope="col">price</th>
+            <th scope="col">Subtotals</th>
+            <th scope="col">remove</th>
+
+          </tr>
+        </thead>
+        <tbody>
+    {% endif %}
+    {% for order in all_orders %}
+    {{order}}
+    {% endfor %}
+
+
+    {% if all_orders.count > 0 %}
+     </tbody>
+     </tbody>
+{%  endif %}
+
+    {% else %}
+    <h4 class="alert alert-warning">
+        NO ORDER HERE
+
+    </h4>
+    {% endif %}
+   
+    <hr>
+</div> 
+
+{% endblock %}
